@@ -29,3 +29,11 @@ The following data-cleaning decisions have been made based on the dataset struct
    * The `availability` column contained both categorical values and specific dates.
    * All rows where `availability` contained a **date** were converted to **`Not Ready To Move`**.
    * This simplifies the feature into a consistent categorical representation focused on whether the property is currently ready for possession.
+
+6. **Removed inconsistent `total_sqft` records**
+
+   * The `total_sqft` column contains values represented as **ranges** (e.g., `1200 - 1500`) as well as values expressed in different units such as **Square Yards** and **Square Meters**.
+   * Instead of attempting to transform or standardize these different representations, the affected **234 rows were removed from the dataset**.
+   * These records represent only **1.83% of the total dataset**, so removing them has a minimal impact on the overall dataset size.
+   * This approach also avoids introducing assumptions through midpoint conversion or unit conversion and keeps the remaining `total_sqft` values consistent for further analysis and model training.
+   * After removing the range values and mismatched units from `total_sqft`, some unrealistic outliers still remained, such as **1 sqft, 60 sqft**, and similar values. Considering that the minimum standard housing size in Bengaluru should be approximately **350–400 sqft**, all records with `total_sqft` **below 300 sqft** were removed from the dataset.
