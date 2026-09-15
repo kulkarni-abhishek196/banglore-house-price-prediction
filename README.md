@@ -37,3 +37,15 @@ The following data-cleaning decisions have been made based on the dataset struct
    * These records represent only **1.83% of the total dataset**, so removing them has a minimal impact on the overall dataset size.
    * This approach also avoids introducing assumptions through midpoint conversion or unit conversion and keeps the remaining `total_sqft` values consistent for further analysis and model training.
    * After removing the range values and mismatched units from `total_sqft`, some unrealistic outliers still remained, such as **1 sqft, 60 sqft**, and similar values. Considering that the minimum standard housing size in Bengaluru should be approximately **350–400 sqft**, all records with `total_sqft` **below 300 sqft** were removed from the dataset.
+
+## Feature Selection Decision
+
+### Created `price_per_sqft` and Removed `area_type`
+
+* A new feature, **`price_per_sqft`**, was calculated using the existing **price** and **`total_sqft`** values.
+* This derived feature provides a more granular representation of the property's price relative to its reported area.
+* Since the dataset also contains **`location`**, the calculated `price_per_sqft` helps capture the **location-wise price premium**. Properties in different locations can have significantly different price levels, and the price per square foot provides a way to represent this variation.
+* The `area_type` column contains only four broad categories: **Plot Area, Carpet Area, Built-up Area, and Super Built-up Area**. These categories represent different definitions of area and therefore do not have the same meaning in terms of the actual area of an individual house.
+* For example, in the case of **Plot Area**, the `total_sqft` value can represent the area of the entire plot/building rather than the actual area of an individual house. Therefore, using `area_type` as an important feature could introduce ambiguity when interpreting the relationship between area and price.
+* Instead, the calculated `price_per_sqft` provides a more direct measure of the **price relative to the reported area**, while also capturing the pricing variation associated with different locations.
+* Based on this reasoning, the **`area_type` column was removed**, and the newly calculated **`price_per_sqft` feature was retained** for further analysis and model building.
