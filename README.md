@@ -38,6 +38,15 @@ The following data-cleaning decisions have been made based on the dataset struct
    * This approach also avoids introducing assumptions through midpoint conversion or unit conversion and keeps the remaining `total_sqft` values consistent for further analysis and model training.
    * After removing the range values and mismatched units from `total_sqft`, some unrealistic outliers still remained, such as **1 sqft, 60 sqft**, and similar values. Considering that the minimum standard housing size in Bengaluru should be approximately **350–400 sqft**, all records with `total_sqft` **below 300 sqft** were removed from the dataset.
 
+7. **Removed Duplicate Records**
+
+    * Identified and removed **937 duplicate rows**, representing approximately **7.5% of the dataset**.
+    * The duplicate records had **identical values across all columns, including the decimal values in the `price` column**.
+    * These duplicates are likely to represent the **same property being listed multiple times by different agents** or may have resulted from a **data-scraping artifact**.
+    * Since there was no distinguishing information between the duplicate records, retaining them would unnecessarily give those properties more weight during model training.
+    * **The first occurrence of each duplicate record was retained**, while subsequent identical occurrences were removed.
+
+
 ## Feature Selection Decision
 
 ### Created `price_per_sqft` and Removed `area_type`
