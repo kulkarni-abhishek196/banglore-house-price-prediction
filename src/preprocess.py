@@ -7,11 +7,11 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import TargetEncoder
 from sklearn.model_selection import train_test_split
 
-def load_and_preprocess():
-    df = pd.read_csv('datasets/dataset.csv')
+def load_and_preprocess(filepath):
+    df = pd.read_csv(filepath)
 
     #1 made standardized for size column converted '2 bedroom' to '2 BHK'
-    df['size_filled'] = df['size'].str.replace(r'(\d+)\s*bedroom', r'\1 BHK', case=False, regex=True)
+    df['size_filled'] = df['size'].str.replace(r'(\d+)\s*Bedroom', r'\1 BHK', case=False, regex=True)
 
     #2. dropping society as it has more than 5k rows missing
     df = df.drop(columns=['society'])
@@ -72,7 +72,7 @@ def load_and_preprocess():
     df['total_sqft_log'] = np.log1p(df['total_sqft'])
 
     #Splitting features and target column
-    X = df.drop(columns=['price', 'price_per_sqft', 'total_sqft'])
+    X = df.drop(columns=['price', 'price_per_sqft', 'total_sqft', 'size'])
     y = df['price']
 
     #columns
