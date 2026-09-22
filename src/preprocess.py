@@ -62,14 +62,13 @@ def load_and_preprocess(filepath):
     rare_locations = counts[counts < 10].index
     df['location'] = df['location'].replace(rare_locations, 'other_rare_location')
 
-    #16. engineered one more feature sqft per bhk
+    #16. logging transformation on total_sqft
+    df['total_sqft_log'] = np.log1p(df['total_sqft'])
+
+    #17. engineered one more feature sqft per bhk
     all_bhk = df['size_filled'].values
     bhkNumbers = df['size_filled'].str.replace('BHK', '', regex=False).str.strip().astype(int)
-
     df['sqft_perBHK'] = df['total_sqft'] / bhkNumbers
-
-    #17. logging transformation on total_sqft
-    df['total_sqft_log'] = np.log1p(df['total_sqft'])
 
     #Splitting features and target column
     X = df.drop(columns=['price', 'price_per_sqft', 'total_sqft', 'size'])
@@ -86,7 +85,7 @@ def load_and_preprocess(filepath):
         ('categorical', OneHotEncoder(), category_cols),
         ('location', TargetEncoder(categories='auto', cv=5, smooth='auto', random_state=42), location_col)
     ],
-    remainder='passthrough'
+    remainder='drop'
     )
 
     return X, y, preprocessor
