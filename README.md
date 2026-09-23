@@ -47,7 +47,7 @@ The following data-cleaning decisions have been made based on the dataset struct
     * **The first occurrence of each duplicate record was retained**, while subsequent identical occurrences were removed.
 
 
-## Feature Selection Decision
+## Feature Engineering & Preprocessing Decisions
 
 ### Created `price_per_sqft` and Removed `area_type`
 
@@ -58,3 +58,16 @@ The following data-cleaning decisions have been made based on the dataset struct
 * For example, in the case of **Plot Area**, the `total_sqft` value can represent the area of the entire plot/building rather than the actual area of an individual house. Therefore, using `area_type` as an important feature could introduce ambiguity when interpreting the relationship between area and price.
 * Instead, the calculated `price_per_sqft` provides a more direct measure of the **price relative to the reported area**, while also capturing the pricing variation associated with different locations.
 * Based on this reasoning, the **`area_type` column was removed**, and the newly calculated **`price_per_sqft` feature was retained** for further analysis and model building.
+
+## Feature Engineering
+
+A derived feature `sqft_per_BHK` was created by dividing `total_sqft` by the number of BHKs. This captures property spaciousness independently of size — two 1,200 sqft properties with 2 BHK and 3 BHK respectively have very different per-room space, which directly impacts price. Existing features alone couldn't distinguish this difference.
+
+## Handling High-Cardinality Location Column
+
+The `location` column had 1,227 unique values. `TargetEncoder` was used to encode location as mean price per location — but locations appearing fewer than 10 times produced unstable encodings, causing the model to extrapolate wildly (one property was predicted at ₹4.85 billion). These rare locations (990 out of 1,227) were bucketed into a single `other_rare_location` category before encoding, which stabilised predictions significantly.
+
+## Log Transformation
+
+Both the target (`price`) and `total_sqft` feature were log-transformed before modelling. Raw house prices and sqft values are heavily right-skewed — log transformation compresses the scale, making the relationship between features and target more linear and improving model performance. Predictions are inverse-transformed using `np.expm1()` to return values in lakhs.
+
