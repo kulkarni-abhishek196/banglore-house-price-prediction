@@ -71,3 +71,22 @@ The `location` column had 1,227 unique values. `TargetEncoder` was used to encod
 
 Both the target (`price`) and `total_sqft` feature were log-transformed before modelling. Raw house prices and sqft values are heavily right-skewed — log transformation compresses the scale, making the relationship between features and target more linear and improving model performance. Predictions are inverse-transformed using `np.expm1()` to return values in lakhs.
 
+## Performance Metrics
+
+| Model | R2_Score | MAPE |
+| :--- | :---: | ---: |
+| Linear Regression | 53.87 | 27.81% |
+| Random Forest | 65.78 | 24.51% |
+| XGBoost Regressor | 59.73 | 24.72% |
+
+## Observations
+
+**Primary metric:** MAPE = 24.51%
+
+Model predictions are typically within **24.51%** of actual price.
+
+**RMSE (80 lakhs)** is skewed by luxury properties (>500 lakhs),  
+which represent **<2% of listings** but dominate squared error metrics.
+
+For typical residential properties (**50–200 lakh range**),  
+model performs significantly better.
