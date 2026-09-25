@@ -7,9 +7,9 @@ data cleaning, feature engineering, and model comparison.
 **Best model:** Random Forest | R² = 65.78% | MAPE = 24.51%
 
 ## How to Run
-pip install -r requirements.txt
-python main.py          # trains and saves model
-streamlit run app.py    # launches prediction app
+* pip install -r requirements.txt
+* python main.py          # trains and saves model
+* streamlit run app.py    # launches prediction app
 
 ## Data Cleaning Decisions
 
