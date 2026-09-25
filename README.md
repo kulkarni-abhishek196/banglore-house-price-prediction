@@ -101,3 +101,9 @@ which represent **<2% of listings** but dominate squared error metrics.
 
 For typical residential properties (**50–200 lakh range**),  
 model performs significantly better.
+
+## Future Work
+- Incorporate proximity features (distance to metro, tech parks, schools)
+- Add builder reputation and project quality data
+- Scope model to sub-500 lakh properties for higher accuracy
+- Experiment with geospatial features using lat/long coordinates
