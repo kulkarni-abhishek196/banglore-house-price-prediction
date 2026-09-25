@@ -1,3 +1,11 @@
+# Bengaluru House Price Prediction
+
+Predicting residential property prices in Bengaluru using Machine Learning.
+Built an end-to-end pipeline handling 13,000+ listings with extensive 
+data cleaning, feature engineering, and model comparison.
+
+**Best model:** Random Forest | R² = 65.78% | MAPE = 24.51%
+
 ## Data Cleaning Decisions
 
 The following data-cleaning decisions have been made based on the dataset structure, missing-value analysis, outlier analysis, and business context:
