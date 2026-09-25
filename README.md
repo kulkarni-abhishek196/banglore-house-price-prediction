@@ -102,6 +102,11 @@ which represent **<2% of listings** but dominate squared error metrics.
 For typical residential properties (**50–200 lakh range**),  
 model performs significantly better.
 
+Linear Regression with TargetEncoder produced extreme predictions 
+(up to ₹4.85 billion) due to extrapolation beyond training range. 
+Tree-based models naturally cap predictions within seen value ranges, 
+making them more suitable for this dataset.
+
 ## Future Work
 - Incorporate proximity features (distance to metro, tech parks, schools)
 - Add builder reputation and project quality data
