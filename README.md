@@ -66,6 +66,9 @@ The following data-cleaning decisions have been made based on the dataset struct
 * For example, in the case of **Plot Area**, the `total_sqft` value can represent the area of the entire plot/building rather than the actual area of an individual house. Therefore, using `area_type` as an important feature could introduce ambiguity when interpreting the relationship between area and price.
 * Instead, the calculated `price_per_sqft` provides a more direct measure of the **price relative to the reported area**, while also capturing the pricing variation associated with different locations.
 * Based on this reasoning, the **`area_type` column was removed**, and the newly calculated **`price_per_sqft` feature was retained** for further analysis and model building.
+* Note: price_per_sqft was used for EDA and outlier detection 
+but excluded from model features to prevent target leakage 
+(it's derived from the target variable price).
 
 ## Feature Engineering
 
